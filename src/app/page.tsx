@@ -35,24 +35,26 @@ export default function Home() {
     );
   });
 
+  const Cell = ({children}) => <td className="border border-gray-300 dark:border-gray-700 p-2 rounded">{children}</td>
+
   return (
     <main style={{ margin: "24px" }}>
-      <h1>Solace Advocates</h1>
+      <h1 className="text-2xl">Solace Advocates</h1>
       <br />
       <br />
       <div>
-        <p>Search</p>
+        <h2 className="font-bold text-xl">Search</h2>
         <p>
           Searching for: <span id="search-term">{searchTerm}</span>
         </p>
-        <input style={{ border: "1px solid black" }} value={searchTerm} onChange={onChange} />
-        <button onClick={onClick}>Reset Search</button>
+        <input style={{ border: "1px solid black" }} value={searchTerm} onChange={onChange} className="py-2 px-4 mr-4 rounded" />
+        <button onClick={onClick} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Reset Search</button>
       </div>
       <br />
       <br />
-      <table>
+      <table className="border-separate border-spacing-2 border border-gray-400 dark:border-gray-500 rounded">
         <thead>
-          <tr>
+          <tr className="text-lg">
             <th>First Name</th>
             <th>Last Name</th>
             <th>City</th>
@@ -66,17 +68,17 @@ export default function Home() {
           {filteredAdvocates.map((advocate) => {
             return (
               <tr key={advocate.id}>
-                <td>{advocate.firstName}</td>
-                <td>{advocate.lastName}</td>
-                <td>{advocate.city}</td>
-                <td>{advocate.degree}</td>
-                <td>
+                <Cell>{advocate.firstName}</Cell>
+                <Cell>{advocate.lastName}</Cell>
+                <Cell>{advocate.city}</Cell>
+                <Cell>{advocate.degree}</Cell>
+                <Cell>
                   {advocate.specialties.map((s) => (
                     <div key={s}>{s}</div>
                   ))}
-                </td>
-                <td>{advocate.yearsOfExperience}</td>
-                <td>{advocate.phoneNumber}</td>
+                </Cell>
+                <Cell>{advocate.yearsOfExperience}</Cell>
+                <Cell>{advocate.phoneNumber}</Cell>
               </tr>
             );
           })}
