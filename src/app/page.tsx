@@ -2,6 +2,19 @@
 
 import { useEffect, useState } from "react";
 
+export const getFilteredAdvocates = (advocates, searchTerm) => advocates.filter((advocate) => {
+  // TODO: messy type coercion (e.g. yearsOfExperience)
+  const search = searchTerm.toLowerCase();
+  return (
+    advocate.firstName.toLowerCase().includes(search) ||
+    advocate.lastName.toLowerCase().includes(search) ||
+    advocate.city.toLowerCase().includes(search) ||
+    advocate.degree.toLowerCase().includes(search) ||
+    advocate.specialties.some(element => element.toLowerCase().includes(search)) ||
+    advocate.yearsOfExperience >= search
+  );
+});
+
 export default function Home() {
   const [advocates, setAdvocates] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -24,20 +37,10 @@ export default function Home() {
     setSearchTerm('');
   };
 
-  const filteredAdvocates = advocates.filter((advocate) => {
-    return (
-      advocate.firstName.includes(searchTerm) ||
-      advocate.lastName.includes(searchTerm) ||
-      advocate.city.includes(searchTerm) ||
-      advocate.degree.includes(searchTerm) ||
-      // TODO: we need to check and see if search term is included in each specialty in the array,
-      // this is just doing a pointless Array.includes() that'll only match array elements exactly
-      advocate.specialties.includes(searchTerm) ||
-      advocate.yearsOfExperience.toString().includes(searchTerm)
-    );
-  });
 
-  const Cell = ({children}: {children: JSX.Element}) => <td className="border border-gray-300 dark:border-gray-700 p-2 rounded">{children}</td>
+  const filteredAdvocates = getFilteredAdvocates(advocates, searchTerm);
+
+  const Cell = ({ children }: { children: JSX.Element }) => <td className="border border-gray-300 dark:border-gray-700 p-2 rounded">{children}</td>
 
   return (
     <main style={{ margin: "24px" }}>
