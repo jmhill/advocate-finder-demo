@@ -30,12 +30,14 @@ export default function Home() {
       advocate.lastName.includes(searchTerm) ||
       advocate.city.includes(searchTerm) ||
       advocate.degree.includes(searchTerm) ||
+      // TODO: we need to check and see if search term is included in each specialty in the array,
+      // this is just doing a pointless Array.includes() that'll only match array elements exactly
       advocate.specialties.includes(searchTerm) ||
       advocate.yearsOfExperience.toString().includes(searchTerm)
     );
   });
 
-  const Cell = ({children}) => <td className="border border-gray-300 dark:border-gray-700 p-2 rounded">{children}</td>
+  const Cell = ({children}: {children: JSX.Element}) => <td className="border border-gray-300 dark:border-gray-700 p-2 rounded">{children}</td>
 
   return (
     <main style={{ margin: "24px" }}>
